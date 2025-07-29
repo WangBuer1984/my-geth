@@ -1,5 +1,7 @@
-搭建单节点私有链
+### <font style="color:rgb(31, 35, 40);">搭建单节点私有链</font>
 使用go-ethereum搭建一个私有链，版本如下
+
+```plain
 -- 下载源码
 git clone https://github.com/ethereum/go-ethereum.git
 
@@ -26,10 +28,17 @@ Operating System: darwin
 GOPATH=/Users/rick/go
 GOROOT=/usr/local/go
 
-先创建测试用的 data 目录
+```
+
+**<font style="color:rgb(31, 35, 40);">先创建测试用的 data 目录</font>**
+
+```bash
 mkdir test_ethereum
 mkdir -p test_ethereum/data
 vi test_ethereum/genesis.json
+```
+
+```json
 {
   "config": {
     "chainId": 1,
@@ -61,8 +70,13 @@ vi test_ethereum/genesis.json
   "parentHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
   "timestamp": "0x00"
 }
-chainId 字段用于标识整个区块链，可以设置为任何正整数。通过将 nonce 修改为随机值，可以有效地防止未知节点连接到你的网络。alloc 字段则用于提前设置一些具有余额的账户
-初始化创世区块
+```
+
+<font style="color:rgb(31, 35, 40);">chainId 字段用于标识整个区块链，可以设置为任何正整数。通过将 nonce 修改为随机值，可以有效地防止未知节点连接到你的网络。alloc 字段则用于提前设置一些具有余额的账户</font>
+
+**<font style="color:rgb(31, 35, 40);">初始化创世区块</font>**
+
+```bash
 geth -datadir test_ethereum/data init test_ethereum/genesis.json
 
 INFO [07-24|21:22:11.389] Maximum peer count                       ETH=50 total=50
@@ -75,7 +89,10 @@ INFO [07-24|21:22:11.443] State scheme set to already existing     scheme=path
 INFO [07-24|21:22:11.444] Opened ancient database                  database=/Users/rick/go/myPrivateChain/data/geth/chaindata/ancient/state readonly=false
 INFO [07-24|21:22:11.444] Initialized path database                cache=16.00MiB buffer=64.00MiB history=90000
 INFO [07-24|21:22:11.444] Successfully wrote genesis state         database=chaindata hash=0e5896..9d3a20
-创建账户
+```
+
+#### <font style="color:rgb(31, 35, 40);">创建账户</font>
+```bash
 geth --datadir test_ethereum/data account new
 
 INFO [07-25|10:56:15.255] Maximum peer count                       ETH=50 LES=0 total=50
@@ -92,8 +109,12 @@ Path of the secret key file: test_ethereum/data/keystore/UTC--2025-07-25T02-56-2
 - You must NEVER share the secret key with anyone! The key controls access to your funds!
 - You must BACKUP your key file! Without the key, it's impossible to access account funds!
 - You must REMEMBER your password! Without the password, it's impossible to decrypt the key!
-此时路径 test_ethereum/data/keystore/ 下会多出一个文件对应这个新账户，内容是 JSON 格式，里面存储的是经过密码加密后的私钥信息。
-运行节点，开始挖矿
+```
+
+<font style="color:rgb(31, 35, 40);">此时路径 </font>`<font style="color:rgb(31, 35, 40);background-color:rgba(129, 139, 152, 0.12);">test_ethereum/data/keystore/</font>`<font style="color:rgb(31, 35, 40);"> 下会多出一个文件对应这个新账户，内容是 JSON 格式，里面存储的是经过密码加密后的私钥信息。</font>
+
+#### <font style="color:rgb(31, 35, 40);">运行节点，开始挖矿</font>
+```bash
 geth -datadir test_ethereum/data \
 -networkid 1 \
 -port "30303" \
@@ -158,20 +179,26 @@ INFO [07-28|23:00:19.714] WebSocket enabled                        url=ws://127.
 INFO [07-28|23:00:19.714] HTTP server started                      endpoint=127.0.0.1:8551 auth=true  prefix= cors=localhost vhosts=localhost
 INFO [07-28|23:00:30.080] Looking for peers                        peercount=0 tried=8 static=0
 INFO [07-28|23:00:40.414] Looking for peers                        peercount=0 tried=21 static=0
-参数解释：
-● -datadir：主数据目录，用于存放数据库和 keystore 目录。
-● -networkid：指定的参数即为 chainID。
-● -port：TCP 监听端口，默认为 30303。
-● -http：开启 HTTP-RPC 功能。
-● -http.api：指定通过 HTTP-RPC 对外提供的 HTTP 接口列表。
-● -http.port：HTTP-RPC 监听接口。
-● -http.corsdomain：HTTP-RPC 服务接受的跨域请求域名列表，可以用逗号分隔或者使用通配符*。这在浏览器调用时是必需的。
-● -nodiscover：关闭节点发现功能。
-● -mine：开启挖矿。
-● -miner.threads：指定挖矿线程数。
-● -miner.etherbase：指定矿工奖励发放地址，需要填写上一步骤中创建的公钥地址（这是一个必填项）。
-进入 JavaScript 控制台，开始与私链交互
-刚才启动的客户端程序已经在不断的刷屏输出挖矿日志，现在请打开一个新的窗口来连接到控制台
+```
+
+<font style="color:rgb(31, 35, 40);">参数解释：</font>
+
++ <font style="color:rgb(31, 35, 40);">-datadir：主数据目录，用于存放数据库和 keystore 目录。</font>
++ <font style="color:rgb(31, 35, 40);">-networkid：指定的参数即为 chainID。</font>
++ <font style="color:rgb(31, 35, 40);">-port：TCP 监听端口，默认为 30303。</font>
++ <font style="color:rgb(31, 35, 40);">-http：开启 HTTP-RPC 功能。</font>
++ <font style="color:rgb(31, 35, 40);">-http.api：指定通过 HTTP-RPC 对外提供的 HTTP 接口列表。</font>
++ <font style="color:rgb(31, 35, 40);">-http.port：HTTP-RPC 监听接口。</font>
++ <font style="color:rgb(31, 35, 40);">-http.corsdomain：HTTP-RPC 服务接受的跨域请求域名列表，可以用逗号分隔或者使用通配符*。这在浏览器调用时是必需的。</font>
++ <font style="color:rgb(31, 35, 40);">-nodiscover：关闭节点发现功能。</font>
++ <font style="color:rgb(31, 35, 40);">-mine：开启挖矿。</font>
++ <font style="color:rgb(31, 35, 40);">-miner.threads：指定挖矿线程数。</font>
++ <font style="color:rgb(31, 35, 40);">-miner.etherbase：指定矿工奖励发放地址，需要填写上一步骤中创建的公钥地址（这是一个必填项）。</font>
+
+#### <font style="color:rgb(31, 35, 40);">进入 JavaScript 控制台，开始与私链交互</font>
+<font style="color:rgb(31, 35, 40);">刚才启动的客户端程序已经在不断的刷屏输出挖矿日志，现在请打开一个新的窗口来连接到控制台</font>
+
+```bash
 geth attach http://127.0.0.1:8999
 
 WARN [07-28|23:04:09.281] Enabling deprecated personal namespace
@@ -236,9 +263,15 @@ GoError: Error: account unlock with HTTP access is forbidden at web3.js:6365:9(3
 >
 
 
-也就是说，为了规避遭受攻击的风险，当节点启用 HTTP 或 WebSocket 的 RPC 连接方式时，会禁用解锁账户等一些功能。如果需要解锁账户，必须在程序启动时添加--allow-insecure-unlock 选项，或者不启用 HTTP/WS 的 RPC 连接功能。
-如果不想启用 HTTP 方式，只需从命令中删除与-http 相关的选项即可。下面将介绍通过第一种方式来解决这个问题：
-修改程序启动命令如下
+```
+
+<font style="color:rgb(31, 35, 40);">也就是说，为了规避遭受攻击的风险，当节点启用 HTTP 或 WebSocket 的 RPC 连接方式时，会禁用解锁账户等一些功能。如果需要解锁账户，必须在程序启动时添加--allow-insecure-unlock 选项，或者不启用 HTTP/WS 的 RPC 连接功能。</font>
+
+<font style="color:rgb(31, 35, 40);">如果不想启用 HTTP 方式，只需从命令中删除与-http 相关的选项即可。下面将介绍通过第一种方式来解决这个问题：</font>
+
+<font style="color:rgb(31, 35, 40);">修改程序启动命令如下</font>
+
+```bash
 geth -datadir test_ethereum/data \
 -networkid 1 \
 -port "30303" \
@@ -252,7 +285,10 @@ geth -datadir test_ethereum/data \
 
 
 
-重新进入 JavaScript 控制台，开始与私链交互
+```
+
+#### <font style="color:rgb(31, 35, 40);">重新进入 JavaScript 控制台，开始与私链交互</font>
+```bash
 > personal.unlockAccount(eth.accounts[0])
 Unlock account 0x267a3c3a7d61f9e7d880e008446d435e9472ecd8
 Passphrase:
@@ -352,3 +388,5 @@ true
   transactionsRoot: "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
   uncles: []
 }
+```
+
